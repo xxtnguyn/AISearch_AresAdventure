@@ -1,7 +1,12 @@
 from State_and_Game import Game, State
 import numpy as np
+<<<<<<< HEAD
 from CONSTAINTS import *
 from Metrics_Tracker import MetricsTracker
+=======
+from constants import *
+from MetricsTracker import MetricsTracker
+>>>>>>> 6c8c38d (from hung)
 
 
 # Print the board
@@ -26,12 +31,21 @@ def is_deadlock(game: Game, box_pos): # 2 adjacent walls, 2 opposite walls is no
 
 # Find neighbors of a state
 # For future sake, we return (neighbor, direction, pushed a box or not, weight pushed)
+<<<<<<< HEAD
 # Parameter:
 #   - AStar_mode: If False then we dont compute the heuristic of the neighbor state
 def find_neighbors(game: Game, state: State, tracker: MetricsTracker, Astart_mode=False):
     neighbors = []
     directions = [('u', -1, 0), ('d', 1, 0), ('l', 0, -1), ('r', 0, 1)]
     
+=======
+def find_neighbors(game: Game, state: State, tracker: MetricsTracker):
+    neighbors = []
+    # directions = [('u', -1, 0), ('d', 1, 0), ('l', 0, -1), ('r', 0, 1)]
+    
+    directions = [('r', 0, 1), ('l', 0, -1), ('u', -1, 0), ('d', 1, 0),]
+
+>>>>>>> 6c8c38d (from hung)
     for direction, dx, dy in directions:
         ares_new_pos = (state.ares_pos[0] + dx, state.ares_pos[1] + dy)
 
@@ -55,18 +69,25 @@ def find_neighbors(game: Game, state: State, tracker: MetricsTracker, Astart_mod
             new_board[rock_old_pos] = ARES_NUM
             new_board[rock_new_pos] = weight
             new_board[state.ares_pos] = SPACE_NUM
+<<<<<<< HEAD
             
+=======
+
+>>>>>>> 6c8c38d (from hung)
             new_state = State(
                 ares_pos=ares_new_pos,
                 board=new_board,
                 cost=state.cost + weight
             )
+<<<<<<< HEAD
 
             # We only deal with heuristic of Astar_mode is ON
             if Astart_mode:
                 new_heuristic = find_heuristic(game, new_state)
                 new_state.heuristic = new_heuristic
 
+=======
+>>>>>>> 6c8c38d (from hung)
             neighbors.append((new_state, direction, pushed_a_rock, weight))
 
         else: # Just walk
@@ -74,17 +95,23 @@ def find_neighbors(game: Game, state: State, tracker: MetricsTracker, Astart_mod
             new_board = np.copy(state.board)
             new_board[state.ares_pos] = SPACE_NUM
             new_board[ares_new_pos] = ARES_NUM
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6c8c38d (from hung)
             new_state = State(
                 ares_pos=ares_new_pos,
                 board=new_board,
                 cost=state.cost + WALK_COST
             )
+<<<<<<< HEAD
 
             # We only deal with heuristic of Astar_mode is ON
             if Astart_mode:
                 new_state.heuristic = state.heuristic # If no box pushed then heuristic dont change
 
+=======
+>>>>>>> 6c8c38d (from hung)
             neighbors.append((new_state, direction, pushed_a_rock, 0))
 
     # Update metrics
@@ -112,6 +139,7 @@ def get_route(parrents, final_state, start_state):
 
     return route[::-1]
 
+<<<<<<< HEAD
 
 # Given a state, find heuristic score of that state
 def find_heuristic(game: Game, state: State):
@@ -159,3 +187,5 @@ def find_heuristic(game: Game, state: State):
 # Compute the manhattan distance between 2 positions
 def manhattan_dist(pos1, pos2):
     return abs(pos1[0] - pos2[0]) + abs(pos1[1] - pos2[1])
+=======
+>>>>>>> 6c8c38d (from hung)

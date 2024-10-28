@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 from CONSTAINTS import *
+=======
+from constants import *
+>>>>>>> 6c8c38d (from hung)
 import numpy as np
 
 class Game:
@@ -36,17 +40,34 @@ class Game:
                     self.goals.append((row, col))
 
         self.board = board
+<<<<<<< HEAD
+=======
+    
+>>>>>>> 6c8c38d (from hung)
 
 class State:
     def __init__(self, ares_pos, board, cost) -> None:
         self.ares_pos = ares_pos
+<<<<<<< HEAD
         self.board = board # Ma trận 
         self.cost = cost
         self.heuristic = 0
+=======
+        self.board = board
+        self.cost = cost
+>>>>>>> 6c8c38d (from hung)
 
     def __eq__(self, value: object) -> bool:
         return np.array_equal(self.board, value.board)
     
+<<<<<<< HEAD
     def __hash__(self):
         return hash(self.board.tobytes())
     
+=======
+    def __lt__(self, value: object) -> bool:
+        return self.cost < value.cost
+    
+    def __hash__(self):
+        return hash(self.board.tobytes())
+>>>>>>> 6c8c38d (from hung)
