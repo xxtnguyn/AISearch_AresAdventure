@@ -38,11 +38,7 @@ algorithm_option = DFS # Default is DFS
 
 
 def load_grid_from_file(filename):
-<<<<<<< HEAD
     global max_grid_len, max_grid_height, weights_list
-=======
-    global max_grid_len, max_grid_height
->>>>>>> 72d58aea220a1465aedbd57e4d304bc1b9cf81bc
 
     """Load the game grid from a file"""
     grid = []
@@ -150,10 +146,7 @@ def create_display():
 def load_game(filename):
     global grid, player_pos, weights_list, weight_pos
     grid = load_grid_from_file(filename)
-<<<<<<< HEAD
     i = 0
-=======
->>>>>>> 72d58aea220a1465aedbd57e4d304bc1b9cf81bc
     for x in range(max_grid_height):
         for y in range(len(grid[x])):
             if grid[x][y] == '@':
@@ -230,11 +223,7 @@ def display_score(screen, level, right_buttons_x):
 
 
 def Window3(level):
-<<<<<<< HEAD
     global grid, path, player_pos, is_playing, algorithm_option, weight_total, step_total, goal_pos, weights_list, weight_pos
-=======
-    global grid, path, player_pos, is_playing, algorithm_option, weight_total, step_total, goal_pos
->>>>>>> 72d58aea220a1465aedbd57e4d304bc1b9cf81bc
 
     pygame.display.set_caption("Sokoban Game")
 
@@ -324,12 +313,9 @@ def Window3(level):
                     weight_total = 0
                     step_total = 0
 
-<<<<<<< HEAD
                     weights_list = []
                     weight_pos = {}
 
-=======
->>>>>>> 72d58aea220a1465aedbd57e4d304bc1b9cf81bc
                     clicked_button_music.play()
 
                     is_playing= False
@@ -351,11 +337,8 @@ def Window3(level):
                     
                     grid = []
                     goal_pos = []
-<<<<<<< HEAD
                     weight_pos = {}
                     weights_list = []
-=======
->>>>>>> 72d58aea220a1465aedbd57e4d304bc1b9cf81bc
 
                     # Đưa các nút còn lại về mặt định
                     buttons[DFS_button_image] = DFS_button
@@ -800,7 +783,6 @@ def Window3(level):
             if not cursor_changed:
                 pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
 
-<<<<<<< HEAD
         # Vẽ trọng số
 
         for pos, weigh_box in weight_pos.items():
@@ -814,8 +796,6 @@ def Window3(level):
             # Vẽ văn bản lên TILE
             screen.blit(text, text_rect)
 
-=======
->>>>>>> 72d58aea220a1465aedbd57e4d304bc1b9cf81bc
         display_score(screen, level, right_buttons_x)
 
         pygame.display.flip()
