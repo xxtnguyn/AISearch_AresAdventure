@@ -1,9 +1,8 @@
 import pygame
 import sys
 import math
-from window2 import Window2
 from waves_draw import draw_waves
-from PATHS import BACKGROUND_PATH, BUTTONS_PATH, SOUNDS_PATH, FONTS_PATH
+from PATHS import BACKGROUND_PATH, BUTTONS_PATH, SOUNDS_PATH, FONTS_PATH, OTHER_IMAGES_PATH
 import os
 
 # Khởi tạo Pygame
@@ -21,11 +20,11 @@ def switch_window(background_image):
     # Tăng chỉ số cửa sổ
     current_window_index = (current_window_index + 1) % len(window_sizes)
     # Gọi hàm hiệu ứng phóng to với kích thước cửa sổ mới
+    from window2 import Window2
     Window2((800, 600))
 
 
 screen = pygame.display.set_mode(window_sizes[current_window_index])
-
 
 def Window1():
     waves = []
@@ -43,12 +42,18 @@ def Window1():
     flip_image = False  # Biến để xác định liệu hình ảnh đã bị lật ngược chưa
 
 
+    guide_button_image = pygame.image.load(os.path.join(BUTTONS_PATH, "guide_button.png"))  # Thay đổi đường dẫn đến bức ảnh của bạn
+    guide_button_image = pygame.transform.smoothscale(guide_button_image, (100, 50))
+    guide_button_rect = guide_button_image.get_rect(center=(800 // 2 + 120, 600 // 2))
+
+
     # Tải bức ảnh ở giữa và lấy kích thước gốc
     play_intro_button_image = pygame.image.load(os.path.join(BUTTONS_PATH, "play_button.png"))  # Thay đổi đường dẫn đến bức ảnh của bạn
     play_intro_button_image = pygame.transform.smoothscale(play_intro_button_image, (100, 100))
     play_intro_button_original_size = play_intro_button_image.get_size()
     play_intro_button_scaled_image = pygame.transform.smoothscale(play_intro_button_image, (play_intro_button_original_size[0], play_intro_button_original_size[1]))
     play_button_intro_rect = play_intro_button_scaled_image.get_rect(center=(800 // 2, 600 // 2))
+
 
     max_scale = 0.8  # Tỉ lệ phóng to tối đa
     min_scale = 0.7  # Tỉ lệ thu nhỏ tối thiểu
@@ -77,7 +82,7 @@ def Window1():
 
     # Set up font
     font_path = os.path.join(FONTS_PATH, "BothWays.ttf")  # Replace with your font file path
-    font_size = 60
+    font_size = 70
     font = pygame.font.Font(font_path, font_size)
 
     # Text and color setup
@@ -92,6 +97,32 @@ def Window1():
     total_text_width = sum(surface.get_width() for surface in text_surfaces)
     start_x = (800 - total_text_width) // 2
     char_positions = [(start_x + sum(surface.get_width() for surface in text_surfaces[:i]), 600 // 3.5) for i in range(len(text))]
+
+
+    # Đường dẫn ảnh
+    guide_image = pygame.image.load(os.path.join(OTHER_IMAGES_PATH, 'guide_images.png'))
+    
+
+    # Kích thước gốc của ảnh và kích thước cửa sổ
+    original_width, original_height = guide_image.get_width(), guide_image.get_height()
+    window_width, window_height = 800, 600
+
+    # Tính toán tỷ lệ co để giữ đúng tỷ lệ ảnh
+    aspect_ratio = original_width / original_height
+    new_width, new_height = window_width, int(window_width / aspect_ratio)
+
+    # Nếu chiều cao vượt quá cửa sổ, điều chỉnh theo chiều cao
+    if new_height > window_height:
+        new_height = window_height
+        new_width = int(window_height * aspect_ratio)
+
+    # Thay đổi kích thước ảnh để phù hợp với kích thước đã tính toán
+    guide_image = pygame.transform.smoothscale(guide_image, (new_width, new_height))
+    guide_image_rect = guide_image.get_rect(center=(window_width // 2, window_height // 2))
+
+    # Trạng thái hiển thị ảnh (ban đầu ẩn)
+    show_image = False
+
 
     # Vòng lặp chính
     running = True
@@ -120,6 +151,14 @@ def Window1():
                     clicked_button_music.play()
 
                     switch_window(background_image)
+                
+                if guide_button_rect.collidepoint(event.pos):
+                    pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+                    show_image = True
+                    clicked_button_music.play()
+
+                elif show_image and guide_image_rect.collidepoint(event.pos):
+                    show_image = False  # Ẩn ảnh khi nhấp chuột vào ảnh
 
         # vẽ sóng
 
@@ -151,7 +190,6 @@ def Window1():
         play_button_intro_rect = play_intro_button_scaled_image.get_rect(center=(800 // 2, 600 // 2))
 
 
-
         # Cập nhật vị trí của bức ảnh
         player_intro_image_rect.x += speed * direction
 
@@ -171,7 +209,7 @@ def Window1():
 
         # Vẽ con trỏ chuột
 
-        if speaker_button_rect.collidepoint(pygame.mouse.get_pos()) or play_button_intro_rect.collidepoint(pygame.mouse.get_pos()):
+        if speaker_button_rect.collidepoint(pygame.mouse.get_pos()) or play_button_intro_rect.collidepoint(pygame.mouse.get_pos()) or guide_button_rect.collidepoint(pygame.mouse.get_pos()):
             cursor_changed = True
             pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)  # Con trỏ hình bàn tay
 
@@ -185,6 +223,8 @@ def Window1():
 
         screen.blit(play_intro_button_scaled_image, play_button_intro_rect)  # Vẽ nút play
 
+        screen.blit(guide_button_image, guide_button_rect) 
+
         screen.blit(player_intro_image, player_intro_image_rect)  # Vẽ bức ảnh
         if game_music_on:
             screen.blit(speaker_on_image, speaker_button_rect)  # Vẽ nút loa bật
@@ -196,6 +236,11 @@ def Window1():
         for i, (surface, (x, y)) in enumerate(zip(text_surfaces, char_positions)):
             offset_y = amplitude * math.sin(frequency * (pygame.time.get_ticks() + i * 100))  # Tính độ lệch y cho mỗi chữ cái
             screen.blit(surface, (x, y + offset_y))
+        
+
+        if show_image:
+            screen.blit(guide_image, guide_image_rect)
+
         pygame.display.flip()
         pygame.time.delay(20)  # Delay để điều chỉnh tốc độ di chuyển
 

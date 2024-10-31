@@ -1,7 +1,6 @@
 import pygame
 import sys
 import os
-from window3 import Window3
 from waves_draw import draw_waves
 from PATHS import BACKGROUND_PATH, LEVELS_PATH, SOUNDS_PATH
 
@@ -95,6 +94,7 @@ def Window2(new_size):
                     if buttons[i].collidepoint(event.pos):
                         clicked_button_music.play()
                         pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+                        from window3 import Window3
                         Window3(i + 1)
 
         # Vẽ bức ảnh nền
