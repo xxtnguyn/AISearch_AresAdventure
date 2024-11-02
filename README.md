@@ -20,6 +20,7 @@ sounds: chứa các file âm thanh nhóm sử dụng cho game
 testcases: lưu các file input.txt làm đầu vào cho game
 
 2.2 Chạy chương trình
+
 Chạy file window1.py
 
 
