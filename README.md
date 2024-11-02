@@ -10,9 +10,13 @@ Dự án này là một trò chơi Sokoban được phát triển cho môn học
 Dự án được tổ chức thành nhiều thư mục và tệp, mỗi phần đảm nhận một nhiệm vụ cụ thể để hỗ trợ hoạt động của trò chơi và triển khai các thuật toán AI.
 
 2.1 Các folders
+
 fonts: chứa file font chữ nhóm sử dụng cho game (BothWays)
+
 images: chứa những ảnh nhóm sử dụng cho game
+
 sounds: chứa các file âm thanh nhóm sử dụng cho game
+
 testcases: lưu các file input.txt làm đầu vào cho game
 
 2.2 Chạy chương trình
